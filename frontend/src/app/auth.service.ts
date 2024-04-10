@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { catchError } from 'rxjs';
 
 interface LoginResponse {
   token: string;
@@ -16,17 +15,10 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   connect(username: string, password: string) {
-    this.http
-      .post<LoginResponse>(this.authUrl + 'login', { username, password })
-      .pipe(
-        catchError((error) => {
-          console.error('API Error : ', error);
-          throw new Error('Something went wrong with API call');
-        })
-      )
-      .subscribe((res) => {
-        this.storeJwt(res.token);
-      });
+    return this.http.post<LoginResponse>(this.authUrl + 'login', {
+      username,
+      password,
+    });
   }
 
   storeJwt(token: string) {

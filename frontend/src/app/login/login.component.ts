@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
+import { Router } from '@angular/router';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -12,10 +14,20 @@ import { AuthService } from '../auth.service';
 export class LoginComponent {
   username = '';
   password = '';
+  error = '';
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
-  sendRequest() {
-    this.authService.connect(this.username, this.password);
+  connect() {
+    this.authService
+      .connect(this.username, this.password)
+      .pipe(
+        catchError((error) => {
+          this.error = 'Wrong credentials';
+          console.error('API Error : ', error);
+          throw new Error('Something went wrong with API call');
+        })
+      )
+      .subscribe(() => this.router.navigate(['movies']));
   }
 }
