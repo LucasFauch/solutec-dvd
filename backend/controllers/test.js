@@ -1,5 +1,6 @@
 function testAPI(req, res) {
-    res.json({ ok: "OK" });
+    console.log(req.auth);
+    res.json({ ...req.auth });
 }
 
 module.exports = { testAPI };

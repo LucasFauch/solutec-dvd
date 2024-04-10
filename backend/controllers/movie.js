@@ -1,8 +1,13 @@
 const Movie = require("../models/Movie");
+const UserFavourites = require("../models/UserFavourites");
 
 async function getMovie(req, res) {
-    const id = req.params.id;
-    const movie = await Movie.findById(id);
+    const movieId = req.params.id;
+    const userId = req.query.userId;
+    const movie = await Movie.findById(movieId);
+
+    const { favourites } = await UserFavourites.findOne({ userId }, { favourites: 1, _id: 0 });
+    movie = { ...movie, favourite: favourites.includes(movie._id) };
     res.json(movie);
 }
 

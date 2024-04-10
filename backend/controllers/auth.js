@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const UserFavourites = require("../models/UserFavourites");
 
 async function register(req, res) {
     const { username, password } = req.body;
@@ -15,8 +16,10 @@ async function register(req, res) {
     }
 
     const user = new User({ username, password, admin: false });
-    const id = await user.save();
-    console.log(id);
+    const { _id } = await user.save();
+
+    const userFavourites = new UserFavourites({ userId: _id });
+    await userFavourites.save();
 
     res.json({ ok: "OK" });
 }
@@ -25,10 +28,10 @@ async function login(req, res) {
     const username = req.body.username;
     const password = req.body.password;
 
-    const user = await User.findOne({ username }, { password: 1, _id: 0 });
+    const user = await User.findOne({ username });
 
     if (!user) {
-        res.json({ error: "Wrong credentials" });
+        res.status(401).json({ error: "Wrong credentials" });
         return;
     }
 
@@ -37,7 +40,7 @@ async function login(req, res) {
         return;
     }
 
-    res.json({ ok: "OK" });
+    res.json({ userId: user._id, isAdmin: user.admin });
 }
 
 module.exports = { register, login };
