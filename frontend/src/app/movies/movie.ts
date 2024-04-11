@@ -7,4 +7,5 @@ export interface Movie {
   demat: boolean;
   dvdQuantity: number;
   bluRayQuantity: number;
+  favourite: boolean;
 }

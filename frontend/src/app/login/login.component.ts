@@ -28,6 +28,9 @@ export class LoginComponent {
           throw new Error('Something went wrong with API call');
         })
       )
-      .subscribe(() => this.router.navigate(['movies']));
+      .subscribe(({ token }) => {
+        this.authService.storeJwt(token);
+        this.router.navigate(['movies']);
+      });
   }
 }
