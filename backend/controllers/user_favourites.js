@@ -2,21 +2,19 @@ const UserFavourites = require("../models/UserFavourites");
 
 async function addFavourite(req, res) {
     const movieId = req.body.movieId;
-    const userId = req.body.userId;
+    const userId = req.auth.userId;
 
-    console.log(userId, movieId);
-
-    await UserFavourites.updateOne({ userId: userId }, { $push: { favourites: movieId } });
+    await UserFavourites.updateOne({ userId }, { $push: { favourites: movieId } });
 
     res.json({ ok: "OK" });
 }
 
 async function getFavourites(req, res) {
-    const userId = req.query.userId;
+    const userId = req.auth.userId;
 
-    const favourites = await UserFavourites.findOne({ userId }, { favourites: 1, _id: 0 });
+    const { favourites } = await UserFavourites.findOne({ userId }).populate("favourites");
 
-    res.json(favourites.favourites);
+    res.json(favourites);
 }
 
 module.exports = { addFavourite, getFavourites };

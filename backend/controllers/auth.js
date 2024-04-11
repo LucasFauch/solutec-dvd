@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const UserFavourites = require("../models/UserFavourites");
+const jwt = require("jsonwebtoken");
 
 async function register(req, res) {
     const { username, password } = req.body;
@@ -40,7 +41,9 @@ async function login(req, res) {
         return;
     }
 
-    res.json({ userId: user._id, isAdmin: user.admin });
+    const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
+
+    res.json({ token, isAdmin: user.admin });
 }
 
 module.exports = { register, login };
