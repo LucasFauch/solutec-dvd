@@ -6,7 +6,7 @@ async function addFavourite(req, res) {
 
     await UserFavourites.updateOne({ userId }, { $push: { favourites: movieId } });
 
-    res.json({ ok: "OK" });
+    res.end();
 }
 
 async function getFavourites(req, res) {

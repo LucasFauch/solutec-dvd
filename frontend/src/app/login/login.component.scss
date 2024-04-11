@@ -1,0 +1,17 @@
+.container {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+}
+
+button {
+  margin-top: 80px;
+}

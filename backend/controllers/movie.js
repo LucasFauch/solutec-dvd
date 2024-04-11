@@ -48,13 +48,13 @@ async function addMovie(req, res) {
     const movie = new Movie({ title, director, year, description, quantity, demat, dvdQuantity, bluRayQuantity });
     movie.save();
 
-    res.json({ ok: "OK" });
+    res.end();
 }
 
 async function deleteMovie(req, res) {
     const id = req.params.id;
     Movie.findByIdAndDelete(id);
-    res.json({ ok: "OK" });
+    res.end();
 }
 
 module.exports = { allMovies, getMovie, addMovie, deleteMovie };

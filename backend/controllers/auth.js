@@ -6,13 +6,13 @@ async function register(req, res) {
     const { username, password } = req.body;
 
     if (!(username && password)) {
-        res.json({ error: "Missing information" });
+        res.status(401).json({ error: "Missing information" });
         return;
     }
 
     const sameUsername = await User.countDocuments({ username });
     if (sameUsername) {
-        res.json({ error: "An account with this username already exists" })
+        res.status(401).json({ error: "An account with this username already exists" })
         return;
     }
 
@@ -22,7 +22,7 @@ async function register(req, res) {
     const userFavourites = new UserFavourites({ userId: _id });
     await userFavourites.save();
 
-    res.json({ ok: "OK" });
+    res.end();
 }
 
 async function login(req, res) {

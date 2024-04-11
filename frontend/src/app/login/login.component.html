@@ -1,22 +1,32 @@
-<form (ngSubmit)="connect()">
-  <mat-form-field>
-    <mat-label>Username</mat-label>
-    <input
-      matInput
-      placeholder="Username"
-      name="username"
-      [(ngModel)]="username"
-    />
-  </mat-form-field>
-  <mat-form-field>
-    <mat-label>Password</mat-label>
-    <input
-      matInput
-      placeholder="Password"
-      name="password"
-      [(ngModel)]="password"
-    />
-  </mat-form-field>
-  <button mat-raised-button color="primary" (click)="connect()">Connect</button>
-</form>
-{{ error }}
+<div class="container">
+  <mat-radio-group [(ngModel)]="mode">
+    <mat-radio-button value="Login"> Login </mat-radio-button>
+    <mat-radio-button value="Register"> Register </mat-radio-button>
+  </mat-radio-group>
+  <form (ngSubmit)="mode == 'Login' ? connect() : register()">
+    <mat-form-field>
+      <mat-label>Username</mat-label>
+      <input
+        required
+        matInput
+        placeholder="Username"
+        name="username"
+        [(ngModel)]="username"
+      />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Password</mat-label>
+      <input
+        required
+        matInput
+        placeholder="Password"
+        name="password"
+        [(ngModel)]="password"
+      />
+    </mat-form-field>
+    <p>{{ response }}</p>
+    <button mat-raised-button color="primary">
+      {{ mode }}
+    </button>
+  </form>
+</div>

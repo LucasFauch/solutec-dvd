@@ -2,21 +2,31 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
-import { catchError } from 'rxjs';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
+import { MatRadioModule } from '@angular/material/radio';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [FormsModule, MatInputModule, MatFormFieldModule, MatButtonModule],
+  imports: [
+    FormsModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatButtonModule,
+    MatRadioModule,
+    CommonModule,
+  ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
 export class LoginComponent implements OnInit {
   username = '';
   password = '';
-  error = '';
+  response = '';
+  mode = 'Login';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -25,18 +35,25 @@ export class LoginComponent implements OnInit {
   }
 
   connect() {
-    this.authService
-      .connect(this.username, this.password)
-      .pipe(
-        catchError((error) => {
-          this.error = 'Wrong credentials';
-          console.error('API Error : ', error);
-          throw new Error('Something went wrong with API call');
-        })
-      )
-      .subscribe(({ token }) => {
+    this.authService.connect(this.username, this.password).subscribe({
+      next: ({ token }) => {
         this.authService.storeJwt(token);
         this.router.navigate(['movies']);
-      });
+      },
+      error: ({ error }) => {
+        this.response = error.error;
+      },
+    });
+  }
+
+  register() {
+    this.authService.register(this.username, this.password).subscribe({
+      next: () => {
+        this.response = 'Account successfully created';
+      },
+      error: ({ error }) => {
+        this.response = error.error;
+      },
+    });
   }
 }
