@@ -1,4 +1,22 @@
-<input type="text" name="username" [(ngModel)]="username" id="username" />
-<input type="text" name="password" [(ngModel)]="password" id="password" />
-<button (click)="connect()">Send</button>
+<form (ngSubmit)="connect()">
+  <mat-form-field>
+    <mat-label>Username</mat-label>
+    <input
+      matInput
+      placeholder="Username"
+      name="username"
+      [(ngModel)]="username"
+    />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input
+      matInput
+      placeholder="Password"
+      name="password"
+      [(ngModel)]="password"
+    />
+  </mat-form-field>
+  <button mat-raised-button color="primary" (click)="connect()">Connect</button>
+</form>
 {{ error }}

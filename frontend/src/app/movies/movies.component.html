@@ -1,3 +1,25 @@
-<a *ngFor="let movie of movies" [routerLink]="['/movies', movie._id]">{{
-  movie.title
-}}</a>
+<div class="container">
+  <mat-card *ngFor="let movie of movies" class="card">
+    <mat-card-header>
+      <mat-card-title>
+        {{ movie.title }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ movie.director }}
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p>{{ movie.year }}</p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button
+        mat-raised-button
+        color="primary"
+        [routerLink]="['/movies', movie._id]"
+      >
+        GO
+      </button>
+      <button mat-raised-button color="secondary">FAV</button>
+    </mat-card-actions>
+  </mat-card>
+</div>
