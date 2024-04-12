@@ -10,4 +10,29 @@
 .card {
   background-color: lightgray;
   padding: 20px;
+  width: 350px;
+}
+
+.img-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+img {
+  height: 200px;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.fav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

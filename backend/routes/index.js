@@ -13,7 +13,8 @@ router.get("/test", testController.testAPI);
 router.post("/auth/register", authController.register);
 router.post("/auth/login", authController.login);
 
-router.post("/movies/favourites", jwt, userFavouritesController.addFavourite);
+router.post("/movies/favourites/:movieId", jwt, userFavouritesController.addFavourite);
+router.delete("/movies/favourites/:movieId", jwt, userFavouritesController.deleteFavourite);
 router.get("/movies/favourites", jwt, userFavouritesController.getFavourites);
 router.get("/movies/:id", jwt, movieController.getMovie);
 router.delete("/movies/:id", movieController.deleteMovie);

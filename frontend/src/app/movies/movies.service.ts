@@ -17,4 +17,12 @@ export class MoviesService {
   getMovieById(movieId: string) {
     return this.http.get<Movie>(this.moviesUrl + movieId);
   }
+
+  addFavourite(movieId: string) {
+    return this.http.post(this.moviesUrl + `favourites/${movieId}`, {});
+  }
+
+  deleteFavourite(movieId: string) {
+    return this.http.delete(this.moviesUrl + `favourites/${movieId}`);
+  }
 }

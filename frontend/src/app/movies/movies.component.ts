@@ -6,6 +6,9 @@ import { RouterModule } from '@angular/router';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-movies',
@@ -16,6 +19,8 @@ import { MatButtonModule } from '@angular/material/button';
     MatGridListModule,
     MatCardModule,
     MatButtonModule,
+    MatIconModule,
+    MatSnackBarModule,
   ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss',
@@ -23,11 +28,38 @@ import { MatButtonModule } from '@angular/material/button';
 export class MoviesComponent implements OnInit {
   movies: Movie[] = [];
 
-  constructor(private moviesService: MoviesService) {}
+  constructor(
+    private moviesService: MoviesService,
+    private snackBar: MatSnackBar
+  ) {}
 
   ngOnInit(): void {
     this.moviesService
       .getAllMovies()
       .subscribe((movies) => (this.movies = movies));
+  }
+
+  addFavourite(movieId: string) {
+    this.moviesService.addFavourite(movieId).subscribe({
+      next: () => {
+        const index = this.movies.findIndex((movie) => movie._id == movieId);
+        this.movies[index].favourite = true;
+        this.snackBar.open('Movie added to favourites !', '', {
+          duration: 2000,
+        });
+      },
+    });
+  }
+
+  deleteFavourite(movieId: string) {
+    this.moviesService.deleteFavourite(movieId).subscribe({
+      next: () => {
+        const index = this.movies.findIndex((movie) => movie._id == movieId);
+        this.movies[index].favourite = false;
+        this.snackBar.open('Movie removed from favourites', '', {
+          duration: 2000,
+        });
+      },
+    });
   }
 }

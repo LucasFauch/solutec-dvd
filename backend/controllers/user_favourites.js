@@ -1,10 +1,19 @@
 const UserFavourites = require("../models/UserFavourites");
 
 async function addFavourite(req, res) {
-    const movieId = req.body.movieId;
+    const movieId = req.params.movieId;
     const userId = req.auth.userId;
 
     await UserFavourites.updateOne({ userId }, { $push: { favourites: movieId } });
+
+    res.end();
+}
+
+async function deleteFavourite(req, res) {
+    const movieId = req.params.movieId;
+    const userId = req.auth.userId;
+
+    await UserFavourites.updateOne({ userId }, { $pull: { favourites: movieId } });
 
     res.end();
 }
@@ -17,4 +26,4 @@ async function getFavourites(req, res) {
     res.json(favourites);
 }
 
-module.exports = { addFavourite, getFavourites };
+module.exports = { addFavourite, deleteFavourite, getFavourites };

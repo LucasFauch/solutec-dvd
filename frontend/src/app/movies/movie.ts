@@ -4,6 +4,7 @@ export interface Movie {
   director: string;
   year: number;
   description: string;
+  poster: string;
   demat: boolean;
   dvdQuantity: number;
   bluRayQuantity: number;
