@@ -27,15 +27,10 @@ async function allMovies(req, res) {
 }
 
 async function addMovie(req, res) {
-    const { title, director, year, description, quantity, demat, dvdQuantity, bluRayQuantity } = req.body;
+    const { title, director, year, description, stock } = req.body;
 
     if (!(title && director && year && description)) {
         res.json({ error: "Missing information" });
-        return;
-    }
-
-    if (!demat && !(dvdQuantity || bluRayQuantity)) {
-        res.json({ error: "Missing physical quantity" });
         return;
     }
 
@@ -45,7 +40,7 @@ async function addMovie(req, res) {
         return;
     }
 
-    const movie = new Movie({ title, director, year, description, quantity, demat, dvdQuantity, bluRayQuantity });
+    const movie = new Movie({ title, director, year, description, stock });
     movie.save();
 
     res.end();

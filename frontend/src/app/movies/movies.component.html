@@ -1,6 +1,12 @@
+<mat-slide-toggle [(ngModel)]="onlyFavourites" class="toggle-favourites"
+  >Show only favourites</mat-slide-toggle
+>
 <div class="container">
-  <mat-card *ngFor="let movie of movies" class="card">
-    <mat-card-header>
+  <mat-card
+    *ngFor="let movie of onlyFavourites ? filteredMovies() : movies"
+    class="card"
+  >
+    <mat-card-header class="link" [routerLink]="['/movies', movie._id]">
       <mat-card-title>
         {{ movie.title }}
       </mat-card-title>
@@ -10,30 +16,21 @@
     </mat-card-header>
     <mat-card-content>
       <p>{{ movie.year }}</p>
-      <div class="img-container">
+      <div class="img-container link" [routerLink]="['/movies', movie._id]">
         <img mat-card-image [src]="movie.poster" />
       </div>
     </mat-card-content>
-    <mat-card-actions class="actions">
-      <button
-        mat-raised-button
-        color="primary"
-        [routerLink]="['/movies', movie._id]"
-      >
-        See
-      </button>
-      <button
-        mat-button
-        color="secondary"
-        class="fav"
-        (click)="
-          movie.favourite ? deleteFavourite(movie._id) : addFavourite(movie._id)
-        "
-      >
-        <mat-icon
-          [fontIcon]="movie.favourite ? 'favorite' : 'favorite_border'"
-        ></mat-icon>
-      </button>
-    </mat-card-actions>
+    <button
+      mat-fab
+      class="favourite"
+      color="secondary"
+      (click)="
+        movie.favourite ? deleteFavourite(movie._id) : addFavourite(movie._id)
+      "
+    >
+      <mat-icon
+        [fontIcon]="movie.favourite ? 'favorite' : 'favorite_border'"
+      ></mat-icon>
+    </button>
   </mat-card>
 </div>

@@ -10,7 +10,9 @@
 .card {
   background-color: lightgray;
   padding: 20px;
-  width: 350px;
+  width: 300px;
+  margin: 20px;
+  position: relative;
 }
 
 .img-container {
@@ -31,8 +33,16 @@ img {
   margin-top: 10px;
 }
 
-.fav {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.toggle-favourites {
+  margin: 20px;
+}
+
+.favourite {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.link {
+  cursor: pointer;
 }

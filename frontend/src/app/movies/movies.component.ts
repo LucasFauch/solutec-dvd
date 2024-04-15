@@ -9,6 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-movies',
@@ -21,12 +23,15 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatButtonModule,
     MatIconModule,
     MatSnackBarModule,
+    MatSlideToggleModule,
+    FormsModule,
   ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss',
 })
 export class MoviesComponent implements OnInit {
   movies: Movie[] = [];
+  onlyFavourites = false;
 
   constructor(
     private moviesService: MoviesService,
@@ -61,5 +66,9 @@ export class MoviesComponent implements OnInit {
         });
       },
     });
+  }
+
+  filteredMovies() {
+    return this.movies.filter((movie) => movie.favourite);
   }
 }

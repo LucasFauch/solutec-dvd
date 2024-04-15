@@ -5,8 +5,10 @@ export interface Movie {
   year: number;
   description: string;
   poster: string;
-  demat: boolean;
-  dvdQuantity: number;
-  bluRayQuantity: number;
+  stock: {
+    demat: number;
+    dvd: number;
+    bluRay: number;
+  };
   favourite: boolean;
 }

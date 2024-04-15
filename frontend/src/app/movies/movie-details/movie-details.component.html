@@ -1,11 +1,30 @@
-<div class="movie" *ngIf="movie">
-  <h1>
-    {{ movie.title }}
-  </h1>
-  <h2>
-    {{ movie.director }}
-  </h2>
-  <h3>
-    {{ movie.year }}
-  </h3>
+<div class="container">
+  <div class="left">
+    <h1>{{ movie.title }}</h1>
+    <h2>{{ movie.director }}</h2>
+    <h3>{{ movie.year }}</h3>
+    <mat-divider></mat-divider>
+    <p>
+      {{ movie.description }}
+    </p>
+  </div>
+  <div class="right">
+    <img [src]="movie.poster" />
+  </div>
+</div>
+
+<div class="rent">
+  <mat-form-field>
+    <mat-label>{{
+      formats.length ? "Rent this movie" : "Not available"
+    }}</mat-label>
+    <mat-select #format [disabled]="!formats.length">
+      <mat-option *ngFor="let format of formats" [value]="format">{{
+        format
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <button mat-raised-button color="primary" [disabled]="!format.value">
+    Pay
+  </button>
 </div>
