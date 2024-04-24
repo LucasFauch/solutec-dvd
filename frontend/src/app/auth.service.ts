@@ -3,14 +3,13 @@ import { HttpClient } from '@angular/common/http';
 
 interface LoginResponse {
   token: string;
-  isAdmin: boolean;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private authUrl = 'http://localhost:3000/auth/';
+  private authUrl = 'http://localhost:8080/auth/';
 
   constructor(private http: HttpClient) {}
 

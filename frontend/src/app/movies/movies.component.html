@@ -6,7 +6,7 @@
     *ngFor="let movie of onlyFavourites ? filteredMovies() : movies"
     class="card"
   >
-    <mat-card-header class="link" [routerLink]="['/movies', movie._id]">
+    <mat-card-header class="link" [routerLink]="['/movies', movie.movieId]">
       <mat-card-title>
         {{ movie.title }}
       </mat-card-title>
@@ -16,7 +16,7 @@
     </mat-card-header>
     <mat-card-content>
       <p>{{ movie.year }}</p>
-      <div class="img-container link" [routerLink]="['/movies', movie._id]">
+      <div class="img-container link" [routerLink]="['/movies', movie.movieId]">
         <img mat-card-image [src]="movie.poster" />
       </div>
     </mat-card-content>
@@ -25,7 +25,9 @@
       class="favourite"
       color="secondary"
       (click)="
-        movie.favourite ? deleteFavourite(movie._id) : addFavourite(movie._id)
+        movie.favourite
+          ? deleteFavourite(movie.movieId)
+          : addFavourite(movie.movieId)
       "
     >
       <mat-icon

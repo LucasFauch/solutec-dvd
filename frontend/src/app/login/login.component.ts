@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         this.router.navigate(['movies']);
       },
       error: ({ error }) => {
-        this.response = error.error;
+        this.response = error.errors.join('\n');
       },
     });
   }

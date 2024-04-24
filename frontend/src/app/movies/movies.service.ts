@@ -6,7 +6,7 @@ import { Movie } from './movie';
   providedIn: 'root',
 })
 export class MoviesService {
-  private moviesUrl = 'http://localhost:3000/movies/';
+  private moviesUrl = 'http://localhost:8080/movies';
 
   constructor(private http: HttpClient) {}
 
@@ -15,14 +15,14 @@ export class MoviesService {
   }
 
   getMovieById(movieId: string) {
-    return this.http.get<Movie>(this.moviesUrl + movieId);
+    return this.http.get<Movie>(this.moviesUrl + `/${movieId}`);
   }
 
   addFavourite(movieId: string) {
-    return this.http.post(this.moviesUrl + `favourites/${movieId}`, {});
+    return this.http.post(this.moviesUrl + `/favourites/${movieId}`, {});
   }
 
   deleteFavourite(movieId: string) {
-    return this.http.delete(this.moviesUrl + `favourites/${movieId}`);
+    return this.http.delete(this.moviesUrl + `/favourites/${movieId}`);
   }
 }

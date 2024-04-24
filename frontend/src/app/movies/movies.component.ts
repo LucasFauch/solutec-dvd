@@ -47,7 +47,9 @@ export class MoviesComponent implements OnInit {
   addFavourite(movieId: string) {
     this.moviesService.addFavourite(movieId).subscribe({
       next: () => {
-        const index = this.movies.findIndex((movie) => movie._id == movieId);
+        const index = this.movies.findIndex(
+          (movie) => movie.movieId == movieId
+        );
         this.movies[index].favourite = true;
         this.snackBar.open('Movie added to favourites !', '', {
           duration: 2000,
@@ -59,7 +61,9 @@ export class MoviesComponent implements OnInit {
   deleteFavourite(movieId: string) {
     this.moviesService.deleteFavourite(movieId).subscribe({
       next: () => {
-        const index = this.movies.findIndex((movie) => movie._id == movieId);
+        const index = this.movies.findIndex(
+          (movie) => movie.movieId == movieId
+        );
         this.movies[index].favourite = false;
         this.snackBar.open('Movie removed from favourites', '', {
           duration: 2000,
