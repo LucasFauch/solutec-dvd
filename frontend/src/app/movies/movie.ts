@@ -5,6 +5,7 @@ export interface Movie {
   year: number;
   description: string;
   poster: string;
+  genres: string[];
   stock: {
     demat: number;
     dvd: number;

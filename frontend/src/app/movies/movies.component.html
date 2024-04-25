@@ -1,41 +1,65 @@
+<mat-button-toggle-group
+  [(ngModel)]="genreFilter"
+  class="genre-filter"
+  multiple
+>
+  <mat-button-toggle
+    *ngFor="let genre of availableGenres"
+    [name]="genre"
+    [value]="genre"
+    >{{ genre }}</mat-button-toggle
+  >
+</mat-button-toggle-group>
 <mat-slide-toggle [(ngModel)]="onlyFavourites" class="toggle-favourites"
   >Show only favourites</mat-slide-toggle
 >
+
 <div class="container">
-  <mat-card
-    *ngFor="let movie of onlyFavourites ? filteredMovies() : movies"
-    class="card"
-  >
-    <mat-card-header
-      class="link card-header"
-      [routerLink]="['/movies', movie.movieId]"
-    >
-      <mat-card-title>
-        {{ movie.title }}
-      </mat-card-title>
-      <mat-card-subtitle>
-        {{ movie.director }}
-      </mat-card-subtitle>
-      <mat-card-subtitle>{{ movie.year }}</mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="img-container link" [routerLink]="['/movies', movie.movieId]">
-        <img mat-card-image [src]="movie.poster" />
-      </div>
-    </mat-card-content>
-    <button
-      mat-fab
-      class="favourite"
-      color="secondary"
-      (click)="
-        movie.favourite
-          ? deleteFavourite(movie.movieId)
-          : addFavourite(movie.movieId)
-      "
-    >
-      <mat-icon
-        [fontIcon]="movie.favourite ? 'favorite' : 'favorite_border'"
-      ></mat-icon>
-    </button>
+  <mat-card *ngFor="let movie of filteredMovies()" class="card">
+    <div class="card-top">
+      <mat-card-header
+        class="link card-header"
+        [routerLink]="['/movies', movie.movieId]"
+      >
+        <mat-card-title>
+          {{ movie.title }}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{ movie.director }}
+        </mat-card-subtitle>
+        <mat-card-subtitle>{{ movie.year }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <div
+          class="img-container link"
+          [routerLink]="['/movies', movie.movieId]"
+        >
+          <img mat-card-image [src]="movie.poster" />
+        </div>
+      </mat-card-content>
+      <button
+        mat-fab
+        class="favourite"
+        color="secondary"
+        (click)="
+          movie.favourite
+            ? deleteFavourite(movie.movieId)
+            : addFavourite(movie.movieId)
+        "
+      >
+        <mat-icon
+          [fontIcon]="movie.favourite ? 'favorite' : 'favorite_border'"
+        ></mat-icon>
+      </button>
+    </div>
+    <div class="card-bottom">
+      <mat-chip-set>
+        <mat-chip
+          *ngFor="let genre of movie.genres"
+          (click)="setGenreFilter(genre)"
+          >{{ genre }}</mat-chip
+        >
+      </mat-chip-set>
+    </div>
   </mat-card>
 </div>

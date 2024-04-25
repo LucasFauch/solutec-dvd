@@ -11,6 +11,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { FormsModule } from '@angular/forms';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @Component({
   selector: 'app-movies',
@@ -25,6 +27,8 @@ import { FormsModule } from '@angular/forms';
     MatSnackBarModule,
     MatSlideToggleModule,
     FormsModule,
+    MatChipsModule,
+    MatButtonToggleModule,
   ],
   templateUrl: './movies.component.html',
   styleUrl: './movies.component.scss',
@@ -32,6 +36,8 @@ import { FormsModule } from '@angular/forms';
 export class MoviesComponent implements OnInit {
   movies: Movie[] = [];
   onlyFavourites = false;
+  availableGenres: string[] = [];
+  genreFilter: string[] = [];
 
   constructor(
     private moviesService: MoviesService,
@@ -39,9 +45,14 @@ export class MoviesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.moviesService
-      .getAllMovies()
-      .subscribe((movies) => (this.movies = movies));
+    this.moviesService.getAllMovies().subscribe((movies) => {
+      this.movies = movies;
+      for (let movie of movies) {
+        for (let genre of movie.genres)
+          if (!this.availableGenres.includes(genre))
+            this.availableGenres.push(genre);
+      }
+    });
   }
 
   addFavourite(movieId: string) {
@@ -72,7 +83,18 @@ export class MoviesComponent implements OnInit {
     });
   }
 
+  setGenreFilter(genre: string) {
+    this.genreFilter = [genre];
+  }
+
   filteredMovies() {
-    return this.movies.filter((movie) => movie.favourite);
+    const filteredByGenre = this.genreFilter.length
+      ? this.movies.filter((movie) =>
+          movie.genres.some((genre) => this.genreFilter.includes(genre))
+        )
+      : this.movies;
+    return this.onlyFavourites
+      ? filteredByGenre.filter((movie) => movie.favourite)
+      : filteredByGenre;
   }
 }

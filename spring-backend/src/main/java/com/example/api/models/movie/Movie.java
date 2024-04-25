@@ -5,6 +5,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Data
 @Document("movies")
 public class Movie {
@@ -14,6 +16,7 @@ public class Movie {
     private String title;
     private int year;
     private String director;
+    private List<MovieGenre> genres;
     private String description;
     private MovieStock stock;
     private String poster = "";
@@ -23,6 +26,7 @@ public class Movie {
         movie.setMovieId(movieId);
         movie.setTitle(title);
         movie.setYear(year);
+        movie.setGenres(genres);
         movie.setDirector(director);
         movie.setDescription(description);
         movie.setStock(stock);

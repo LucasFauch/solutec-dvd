@@ -1,3 +1,7 @@
+.genre-filter {
+  margin: 15px;
+}
+
 .container {
   margin: 20px;
   display: flex;
@@ -12,6 +16,14 @@
   padding: 20px;
   margin: 20px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.card-top {
   display: flex;
   flex-direction: row;
 }
