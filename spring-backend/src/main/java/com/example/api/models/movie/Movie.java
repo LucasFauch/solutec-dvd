@@ -13,6 +13,7 @@ public class Movie {
     @Indexed(unique = true)
     private String title;
     private int year;
+    private String director;
     private String description;
     private MovieStock stock;
     private String poster = "";
@@ -22,6 +23,7 @@ public class Movie {
         movie.setMovieId(movieId);
         movie.setTitle(title);
         movie.setYear(year);
+        movie.setDirector(director);
         movie.setDescription(description);
         movie.setStock(stock);
         movie.setPoster(poster);

@@ -40,8 +40,8 @@ export class LoginComponent implements OnInit {
         this.authService.storeJwt(token);
         this.router.navigate(['movies']);
       },
-      error: ({ error }) => {
-        this.response = error.errors.join('\n');
+      error: () => {
+        this.response = 'Wrong credentials';
       },
     });
   }
@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
         this.response = 'Account successfully created';
       },
       error: ({ error }) => {
-        this.response = error.error;
+        this.response = error.errors.join(', ');
       },
     });
   }
