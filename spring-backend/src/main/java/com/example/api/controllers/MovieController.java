@@ -1,7 +1,9 @@
 package com.example.api.controllers;
 
+import com.example.api.models.MovieRent;
 import com.example.api.models.movie.Movie;
 import com.example.api.models.movie.MovieWithFavourite;
+import com.example.api.services.MovieRentService;
 import com.example.api.services.movie.MovieAlreadyExistsException;
 import com.example.api.services.movie.MovieService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,6 +21,8 @@ public class MovieController {
 
     @Autowired
     private MovieService movieService;
+    @Autowired
+    private MovieRentService movieRentService;
 
     @GetMapping()
     public List<MovieWithFavourite> getMoviesWithFavourites(HttpServletRequest req){
@@ -45,6 +49,18 @@ public class MovieController {
     @GetMapping("/{movieId}")
     public Optional<Movie> getMovieById(@PathVariable String movieId){
         return this.movieService.getMovieById(movieId);
+    }
+
+    @PostMapping("/rent/{movieId}/{rentType}")
+    public MovieRent rentMovie(@PathVariable String movieId, @PathVariable String rentType, HttpServletRequest req){
+        final String userId = req.getAttribute("userId").toString();
+        return this.movieRentService.rentMovie(userId, movieId, rentType);
+    }
+
+    @GetMapping("/rents")
+    public List<Optional<Movie>> getRents(HttpServletRequest req){
+        final String userId = req.getAttribute("userId").toString();
+        return this.movieRentService.getRents(userId);
     }
 
 }

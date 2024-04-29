@@ -25,4 +25,15 @@ export class MoviesService {
   deleteFavourite(movieId: string) {
     return this.http.delete(this.moviesUrl + `/favourites/${movieId}`);
   }
+
+  getRents() {
+    return this.http.get<Movie[]>(this.moviesUrl + '/rents');
+  }
+
+  rent(movieId: string, rentType: string) {
+    return this.http.post(
+      this.moviesUrl + `/rent/${movieId}/${rentType}`,
+      null
+    );
+  }
 }
