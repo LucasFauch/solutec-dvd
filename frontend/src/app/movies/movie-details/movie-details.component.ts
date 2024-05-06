@@ -10,6 +10,12 @@ import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { CommentsService } from './comments.service';
+import { MatIconModule } from '@angular/material/icon';
+import { Comment } from './comment';
+import { AuthService } from '../../auth.service';
+import { MatDialog } from '@angular/material/dialog';
+import { AddCommentDialogComponent } from './add-comment-dialog/add-comment-dialog.component';
 
 @Component({
   selector: 'app-movie-details',
@@ -22,6 +28,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
     MatButtonModule,
     FormsModule,
     MatSnackBarModule,
+    MatIconModule,
   ],
   templateUrl: './movie-details.component.html',
   styleUrl: './movie-details.component.scss',
@@ -31,29 +38,41 @@ export class MovieDetailsComponent implements OnInit {
   formats: string[] = [];
   isAlreadyRented = false;
   selectedFormat: string | null = null;
+  comments: Comment[] = [];
+  userId = '';
+  newComment = '';
 
   constructor(
     private route: ActivatedRoute,
     private moviesService: MoviesService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private commentsService: CommentsService,
+    private authService: AuthService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
       const movieId = params.get('id');
-      if (movieId)
+      if (movieId) {
+        this.commentsService.getMovieComments(movieId).subscribe((comments) => {
+          this.comments = comments;
+        });
         this.moviesService.getMovieById(movieId).subscribe((movie) => {
           this.movie = movie;
           if (movie.stock.demat) this.formats.push('Dematerialized');
           if (movie.stock.dvd) this.formats.push('DVD');
           if (movie.stock.bluRay) this.formats.push('Blu-Ray');
         });
+      }
     });
 
     this.moviesService.getRents().subscribe((movies) => {
       const rentedMovieIds = movies.map((movie) => movie.movieId);
       this.isAlreadyRented = rentedMovieIds.includes(this.movie.movieId);
     });
+
+    this.userId = this.authService.getUserId()!;
   }
 
   rent() {
@@ -71,5 +90,30 @@ export class MovieDetailsComponent implements OnInit {
           console.log(err);
         },
       });
+  }
+
+  deleteComment(commentId: string) {
+    this.commentsService.deleteComment(commentId).subscribe({
+      next: () => {
+        window.location.reload();
+      },
+    });
+  }
+
+  openCommentDialog() {
+    const dialogRef = this.dialog.open(AddCommentDialogComponent, {
+      width: '500px',
+      data: { comment: this.newComment },
+    });
+
+    dialogRef.afterClosed().subscribe((comment) => {
+      if (comment) {
+        this.commentsService.addComment(this.movie.movieId, comment).subscribe({
+          next: () => {
+            window.location.reload();
+          },
+        });
+      }
+    });
   }
 }

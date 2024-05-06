@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 interface LoginResponse {
   token: string;
+  userId: string;
 }
 
 @Injectable({
@@ -27,8 +28,9 @@ export class AuthService {
     });
   }
 
-  storeJwt(token: string) {
+  storeAuth(token: string, userId: string) {
     sessionStorage.setItem('jwt', token);
+    sessionStorage.setItem('userId', userId);
   }
 
   disconnect() {
@@ -37,5 +39,9 @@ export class AuthService {
 
   getToken() {
     return sessionStorage.getItem('jwt');
+  }
+
+  getUserId() {
+    return sessionStorage.getItem('userId');
   }
 }

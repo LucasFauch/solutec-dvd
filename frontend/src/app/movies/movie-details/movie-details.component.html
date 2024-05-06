@@ -1,42 +1,73 @@
-<div class="container" *ngIf="movie">
-  <div class="left">
-    <h1>{{ movie.title }}</h1>
-    <h2>{{ movie.director }}</h2>
-    <h3>{{ movie.year }}</h3>
-    <mat-divider></mat-divider>
-    <p>
-      {{ movie.description }}
-    </p>
+<div class="container">
+  <div class="top" *ngIf="movie">
+    <div class="left">
+      <h1 class="title">{{ movie.title }}</h1>
+      <h3>{{ movie.director }}</h3>
+      <h3>{{ movie.year }}</h3>
+      <mat-divider></mat-divider>
+      <p class="description">
+        {{ movie.description }}
+      </p>
+    </div>
+    <div class="right">
+      <img [src]="movie.poster" />
+    </div>
   </div>
-  <div class="right">
-    <img [src]="movie.poster" />
-  </div>
-</div>
 
-<div class="rent">
-  <div *ngIf="!isAlreadyRented">
-    <mat-form-field>
-      <mat-label>{{
-        formats.length ? "Rent this movie" : "Not available"
-      }}</mat-label>
-      <mat-select
-        #format
-        [(ngModel)]="selectedFormat"
-        [disabled]="!formats.length"
+  <div class="rent">
+    <div *ngIf="!isAlreadyRented">
+      <mat-form-field>
+        <mat-label>{{
+          formats.length ? "Rent this movie" : "Not available"
+        }}</mat-label>
+        <mat-select
+          #format
+          [(ngModel)]="selectedFormat"
+          [disabled]="!formats.length"
+        >
+          <mat-option *ngFor="let format of formats" [value]="format">{{
+            format
+          }}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button
+        mat-raised-button
+        color="primary"
+        [disabled]="!format.value"
+        (click)="rent()"
       >
-        <mat-option *ngFor="let format of formats" [value]="format">{{
-          format
-        }}</mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="!format.value"
-      (click)="rent()"
-    >
-      Pay
-    </button>
+        Pay
+      </button>
+    </div>
+    <h2 *ngIf="isAlreadyRented">You already rented this movie</h2>
   </div>
-  <h2 *ngIf="isAlreadyRented">You already rented this movie</h2>
+
+  <div class="comments">
+    <h1 class="comments-title">
+      Comments
+      <button mat-mini-fab color="secondary" (click)="openCommentDialog()">
+        <mat-icon fontIcon="add"></mat-icon>
+      </button>
+    </h1>
+    <div *ngFor="let comment of comments">
+      <mat-divider></mat-divider>
+      <div class="comment">
+        <div class="comment-content">
+          <p class="author">
+            {{ comment.authorName }}
+          </p>
+          <p class="comment">
+            {{ comment.text }}
+          </p>
+        </div>
+        <button
+          *ngIf="comment.authorId == userId"
+          (click)="deleteComment(comment.id)"
+          mat-icon-button
+        >
+          <mat-icon fontIcon="delete"></mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

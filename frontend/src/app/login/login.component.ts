@@ -36,8 +36,8 @@ export class LoginComponent implements OnInit {
 
   connect() {
     this.authService.connect(this.username, this.password).subscribe({
-      next: ({ token }) => {
-        this.authService.storeJwt(token);
+      next: ({ token, userId }) => {
+        this.authService.storeAuth(token, userId);
         this.router.navigate(['movies']);
       },
       error: () => {

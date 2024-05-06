@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>New comment</h1>
+<div mat-dialog-content>
+  <p>What do you think about this movie ?</p>
+  <mat-form-field class="comment-area">
+    <textarea
+      matInput
+      cdkFocusInitial
+      placeholder="Leave a comment"
+      [(ngModel)]="data.newComment"
+    ></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data.newComment">Add comment</button>
+</div>

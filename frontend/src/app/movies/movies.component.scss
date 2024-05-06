@@ -13,6 +13,7 @@
 
 .card {
   background-color: #e8def8;
+  // background-color: #9f86c0;
   padding: 20px;
   margin: 20px;
   width: 400px;
@@ -22,6 +23,10 @@
   align-items: center;
   justify-content: center;
   gap: 15px;
+}
+
+.title {
+  font-size: 26px;
 }
 
 .card-top {
@@ -57,4 +62,9 @@ img {
 
 .link {
   cursor: pointer;
+}
+
+.chip {
+  --mdc-chip-elevated-container-color: #231942;
+  --mdc-chip-label-text-color: white;
 }

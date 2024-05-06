@@ -21,7 +21,7 @@
         class="link card-header"
         [routerLink]="['/movies', movie.movieId]"
       >
-        <mat-card-title>
+        <mat-card-title class="title">
           {{ movie.title }}
         </mat-card-title>
         <mat-card-subtitle>
@@ -56,9 +56,11 @@
       <mat-chip-set>
         <mat-chip
           *ngFor="let genre of movie.genres"
+          class="chip"
           (click)="setGenreFilter(genre)"
-          >{{ genre }}</mat-chip
         >
+          {{ genre }}
+        </mat-chip>
       </mat-chip-set>
     </div>
   </mat-card>
