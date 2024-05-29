@@ -72,6 +72,22 @@ public class MovieRentService {
     }
 
     public void deleteRent(String rentId){
+        MovieRent movieRent = movieRentRepository.findById(rentId).get();
+        final String rentType = movieRent.getRentType();
+        final String movieId = movieRent.getMovieId();
+        Movie movie = this.movieRepository.findById(movieId).get();
+        if(rentType.equals("DVD")){
+            MovieStock stock = movie.getStock();
+            stock.setDvd(stock.getDvd() + 1);
+            movie.setStock(stock);
+            movieRepository.save(movie);
+        }
+        if(rentType.equals("Blu-Ray")){
+            MovieStock stock = movie.getStock();
+            stock.setBluRay(stock.getBluRay() + 1);
+            movie.setStock(stock);
+            movieRepository.save(movie);
+        }
         this.movieRentRepository.deleteById(rentId);
     }
 }
