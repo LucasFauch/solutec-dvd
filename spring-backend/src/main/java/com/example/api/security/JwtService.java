@@ -38,7 +38,7 @@ public class JwtService {
                 .signWith(getKey())
                 .compact();
 
-        return Map.of("token", jwt, "userId", user.getUserId());
+        return Map.of("token", jwt, "userId", user.getUserId(), "admin", String.valueOf(user.getRoles().contains("ADMIN")));
     }
 
     private SecretKey getKey(){

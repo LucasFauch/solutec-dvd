@@ -36,8 +36,8 @@ export class LoginComponent implements OnInit {
 
   connect() {
     this.authService.connect(this.username, this.password).subscribe({
-      next: ({ token, userId }) => {
-        this.authService.storeAuth(token, userId);
+      next: ({ token, userId, admin }) => {
+        this.authService.storeAuth(token, userId, admin);
         this.router.navigate(['movies']);
       },
       error: () => {

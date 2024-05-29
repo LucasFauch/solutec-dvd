@@ -31,5 +31,4 @@ public class UserFavouritesController {
         final String userId = req.getAttribute("userId").toString();
         return this.userFavouritesService.getUserFavourites(userId);
     }
-
 }

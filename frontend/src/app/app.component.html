@@ -1,2 +1,19 @@
-<header>DVD Store</header>
+<header>
+  <div class="title">DVD Store</div>
+  <div class="buttons" *ngIf="sessionStorage.length">
+    <button
+      mat-fab
+      color="secondary"
+      *ngIf="sessionStorage.getItem('admin') == 'true'"
+    >
+      <mat-icon fontIcon="admin_panel_settings"> </mat-icon>
+    </button>
+    <button mat-fab color="secondary">
+      <mat-icon fontIcon="account_circle"> </mat-icon>
+    </button>
+    <button mat-fab color="secondary" (click)="logout()">
+      <mat-icon fontIcon="logout"> </mat-icon>
+    </button>
+  </div>
+</header>
 <router-outlet></router-outlet>

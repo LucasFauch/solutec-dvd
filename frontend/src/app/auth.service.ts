@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 interface LoginResponse {
   token: string;
   userId: string;
+  admin: string;
 }
 
 @Injectable({
@@ -28,13 +29,16 @@ export class AuthService {
     });
   }
 
-  storeAuth(token: string, userId: string) {
+  storeAuth(token: string, userId: string, admin: string) {
     sessionStorage.setItem('jwt', token);
     sessionStorage.setItem('userId', userId);
+    sessionStorage.setItem('admin', admin);
   }
 
   disconnect() {
     sessionStorage.removeItem('jwt');
+    sessionStorage.removeItem('userId');
+    sessionStorage.removeItem('admin');
   }
 
   getToken() {
@@ -43,5 +47,9 @@ export class AuthService {
 
   getUserId() {
     return sessionStorage.getItem('userId');
+  }
+
+  getIsAdmin() {
+    return sessionStorage.getItem('admin') == 'true';
   }
 }

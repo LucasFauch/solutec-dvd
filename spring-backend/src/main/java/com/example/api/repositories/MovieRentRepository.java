@@ -1,6 +1,6 @@
 package com.example.api.repositories;
 
-import com.example.api.models.MovieRent;
+import com.example.api.models.rent.MovieRent;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

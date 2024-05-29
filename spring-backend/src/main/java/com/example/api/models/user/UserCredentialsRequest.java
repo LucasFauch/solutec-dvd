@@ -4,6 +4,8 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.springframework.data.mongodb.core.index.Indexed;
 
+import java.util.Set;
+
 @Data
 public class UserCredentialsRequest {
 
@@ -17,7 +19,7 @@ public class UserCredentialsRequest {
         User user = new User();
         user.setUsername(this.getUsername());
         user.setPassword(encryptedPassword);
-        user.setAdmin(false);
+        user.setRoles(Set.of("USER"));
         return user;
     }
 

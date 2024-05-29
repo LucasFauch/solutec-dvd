@@ -1,8 +1,9 @@
 package com.example.api.controllers;
 
-import com.example.api.models.MovieRent;
+import com.example.api.models.rent.MovieRent;
 import com.example.api.models.movie.Movie;
 import com.example.api.models.movie.MovieWithFavourite;
+import com.example.api.models.rent.RentInfo;
 import com.example.api.services.MovieRentService;
 import com.example.api.services.movie.MovieAlreadyExistsException;
 import com.example.api.services.movie.MovieService;
@@ -10,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,9 +60,15 @@ public class MovieController {
     }
 
     @GetMapping("/rents")
-    public List<Optional<Movie>> getRents(HttpServletRequest req){
-        final String userId = req.getAttribute("userId").toString();
-        return this.movieRentService.getRents(userId);
+    @Secured("ADMIN")
+    public List<RentInfo> getRents(HttpServletRequest req){
+        return this.movieRentService.getRents();
+    }
+
+    @DeleteMapping("/rents/{rentId}")
+    @Secured("ADMIN")
+    public void deleteRent(@PathVariable String rentId, HttpServletRequest req){
+        this.movieRentService.deleteRent(rentId);
     }
 
 }

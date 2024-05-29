@@ -2,9 +2,21 @@ header {
   background-color: #231942;
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 30px;
+  justify-content: space-between;
+  height: 85px;
+}
+
+.title {
+  margin: 30px;
   font-weight: 500;
   font-size: 40px;
   color: white;
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
 }
