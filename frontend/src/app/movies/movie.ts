@@ -5,6 +5,7 @@ export interface Movie {
   year: number;
   description: string;
   poster: string;
+  movieName: string;
   genres: string[];
   stock: {
     demat: number;

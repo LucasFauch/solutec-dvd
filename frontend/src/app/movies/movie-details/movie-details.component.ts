@@ -68,8 +68,8 @@ export class MovieDetailsComponent implements OnInit {
     });
 
     this.moviesService.getRents().subscribe((movies) => {
-      const rentedMovieIds = movies.map((movie) => movie.movieId);
-      this.isAlreadyRented = rentedMovieIds.includes(this.movie.movieId);
+      const rentedMovieIds = movies.map((movie) => movie.movieName);
+      this.isAlreadyRented = rentedMovieIds.includes(this.movie.title);
     });
 
     this.userId = this.authService.getUserId()!;

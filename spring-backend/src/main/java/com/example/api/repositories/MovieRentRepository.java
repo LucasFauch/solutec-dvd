@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface MovieRentRepository extends MongoRepository<MovieRent, String> {
     List<MovieRent> getByUserId(String userId);
+    List<MovieRent> getAllByUserId(String userId);
 }

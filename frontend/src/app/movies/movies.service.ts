@@ -27,7 +27,7 @@ export class MoviesService {
   }
 
   getRents() {
-    return this.http.get<Movie[]>(this.moviesUrl + '/rents');
+    return this.http.get<Movie[]>(this.moviesUrl + '/userrents');
   }
 
   rent(movieId: string, rentType: string) {

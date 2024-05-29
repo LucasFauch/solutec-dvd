@@ -71,6 +71,27 @@ public class MovieRentService {
         return infos;
     }
 
+    public List<RentInfo> getUserRents(String userId){
+        List<MovieRent> movieRents = movieRentRepository.getAllByUserId(userId);
+        List<RentInfo> infos = new ArrayList<>();
+        for(MovieRent movieRent : movieRents){
+            final String username = this.authService.loadUserByUserId(movieRent.getUserId()).getUsername();
+            final String movieName = this.movieRepository.findById(movieRent.getMovieId()).get().getTitle();
+            final String rentType = movieRent.getRentType();
+            final String rentId = movieRent.getId();
+
+            RentInfo rentInfo = new RentInfo();
+            rentInfo.setUsername(username);
+            rentInfo.setMovieName(movieName);
+            rentInfo.setRentType(rentType);
+            rentInfo.setRentId(rentId);
+
+            infos.add(rentInfo);
+        }
+
+        return infos;
+    }
+
     public void deleteRent(String rentId){
         MovieRent movieRent = movieRentRepository.findById(rentId).get();
         final String rentType = movieRent.getRentType();

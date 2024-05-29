@@ -59,6 +59,12 @@ public class MovieController {
         return this.movieRentService.rentMovie(userId, movieId, rentType);
     }
 
+    @GetMapping("/userrents")
+    public List<RentInfo> getUserRents(HttpServletRequest req){
+        final String userId = req.getAttribute("userId").toString();
+        return this.movieRentService.getUserRents(userId);
+    }
+
     @GetMapping("/rents")
     @Secured("ADMIN")
     public List<RentInfo> getRents(HttpServletRequest req){
