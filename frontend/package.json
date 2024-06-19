@@ -7,7 +7,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "deploy": "ng build --base-href /solutec-dvd/ --configuration deployment && git commit -am 'Deployment' && git push"
+    "deploy": "ng build --base-href /solutec-dvd/ --configuration production && git commit -am 'Deployment' && git push"
   },
   "private": true,
   "dependencies": {

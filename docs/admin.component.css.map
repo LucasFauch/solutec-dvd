@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/admin/admin.component.scss"],
-  "sourcesContent": [".table {\r\n  width: 80%;\r\n}\r\n"],
-  "mappings": ";AAAA,CAAA;AACE,SAAA;;",
-  "names": []
-}

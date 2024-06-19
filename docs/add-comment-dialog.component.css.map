@@ -1,7 +1,0 @@
-{
-  "version": 3,
-  "sources": ["src/app/movies/movie-details/add-comment-dialog/add-comment-dialog.component.scss"],
-  "sourcesContent": [".comment-area {\r\n  width: 100%;\r\n}\r\n"],
-  "mappings": ";AAAA,CAAA;AACE,SAAA;;",
-  "names": []
-}
