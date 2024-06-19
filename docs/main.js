@@ -8657,7 +8657,7 @@ function processHostBindingOpCodes(tView, lView) {
     setSelectedIndex(-1);
   }
 }
-function createLView(parentLView, tView, context2, flags, host, tHostNode, environment, renderer, injector, embeddedViewInjector, hydrationInfo) {
+function createLView(parentLView, tView, context2, flags, host, tHostNode, environment2, renderer, injector, embeddedViewInjector, hydrationInfo) {
   const lView = tView.blueprint.slice();
   lView[HOST] = host;
   lView[FLAGS] = flags | 4 | 128 | 8 | 64;
@@ -8668,7 +8668,7 @@ function createLView(parentLView, tView, context2, flags, host, tHostNode, envir
   ngDevMode && tView.declTNode && parentLView && assertTNodeForLView(tView.declTNode, parentLView);
   lView[PARENT] = lView[DECLARATION_VIEW] = parentLView;
   lView[CONTEXT] = context2;
-  lView[ENVIRONMENT] = environment || parentLView && parentLView[ENVIRONMENT];
+  lView[ENVIRONMENT] = environment2 || parentLView && parentLView[ENVIRONMENT];
   ngDevMode && assertDefined(lView[ENVIRONMENT], "LViewEnvironment is required");
   lView[RENDERER] = renderer || parentLView && parentLView[RENDERER];
   ngDevMode && assertDefined(lView[RENDERER], "Renderer is required");
@@ -9695,8 +9695,8 @@ var REACTIVE_LVIEW_CONSUMER_NODE = __spreadProps(__spreadValues({}, REACTIVE_NOD
 });
 var MAXIMUM_REFRESH_RERUNS = 100;
 function detectChangesInternal(lView, notifyErrorHandler = true, mode = 0) {
-  const environment = lView[ENVIRONMENT];
-  const rendererFactory = environment.rendererFactory;
+  const environment2 = lView[ENVIRONMENT];
+  const rendererFactory = environment2.rendererFactory;
   const checkNoChangesMode = !!ngDevMode && isInCheckNoChangesMode();
   if (!checkNoChangesMode) {
     rendererFactory.begin?.();
@@ -9711,7 +9711,7 @@ function detectChangesInternal(lView, notifyErrorHandler = true, mode = 0) {
   } finally {
     if (!checkNoChangesMode) {
       rendererFactory.end?.();
-      environment.inlineEffectRunner?.flush();
+      environment2.inlineEffectRunner?.flush();
     }
   }
 }
@@ -11114,7 +11114,7 @@ var ComponentFactory = class extends ComponentFactory$1 {
       const sanitizer = rootViewInjector.get(Sanitizer, null);
       const afterRenderEventManager = rootViewInjector.get(AfterRenderEventManager, null);
       const changeDetectionScheduler = rootViewInjector.get(ChangeDetectionScheduler, null);
-      const environment = {
+      const environment2 = {
         rendererFactory,
         sanitizer,
         // We don't use inline effects (yet).
@@ -11141,7 +11141,7 @@ var ComponentFactory = class extends ComponentFactory$1 {
         );
       }
       const rootTView = createTView(0, null, null, 1, 0, null, null, null, null, null, null);
-      const rootLView = createLView(null, rootTView, null, rootFlags, null, null, environment, hostRenderer, rootViewInjector, null, hydrationInfo);
+      const rootLView = createLView(null, rootTView, null, rootFlags, null, null, environment2, hostRenderer, rootViewInjector, null, hydrationInfo);
       enterView(rootLView);
       let component;
       let tElementNode;
@@ -11159,7 +11159,7 @@ var ComponentFactory = class extends ComponentFactory$1 {
           rootDirectives = [rootComponentDef];
         }
         const hostTNode = createRootComponentTNode(rootLView, hostRNode);
-        const componentView = createRootComponentView(hostTNode, hostRNode, rootComponentDef, rootDirectives, rootLView, environment, hostRenderer);
+        const componentView = createRootComponentView(hostTNode, hostRNode, rootComponentDef, rootDirectives, rootLView, environment2, hostRenderer);
         tElementNode = getTNode(rootTView, HEADER_OFFSET);
         if (hostRNode) {
           setRootNodeAttributes(hostRenderer, rootComponentDef, hostRNode, rootSelectorOrNode);
@@ -11233,21 +11233,21 @@ function createRootComponentTNode(lView, rNode) {
   lView[index] = rNode;
   return getOrCreateTNode(tView, index, 2, "#host", null);
 }
-function createRootComponentView(tNode, hostRNode, rootComponentDef, rootDirectives, rootView, environment, hostRenderer) {
+function createRootComponentView(tNode, hostRNode, rootComponentDef, rootDirectives, rootView, environment2, hostRenderer) {
   const tView = rootView[TVIEW];
   applyRootComponentStyling(rootDirectives, tNode, hostRNode, hostRenderer);
   let hydrationInfo = null;
   if (hostRNode !== null) {
     hydrationInfo = retrieveHydrationInfo(hostRNode, rootView[INJECTOR]);
   }
-  const viewRenderer = environment.rendererFactory.createRenderer(hostRNode, rootComponentDef);
+  const viewRenderer = environment2.rendererFactory.createRenderer(hostRNode, rootComponentDef);
   let lViewFlags = 16;
   if (rootComponentDef.signals) {
     lViewFlags = 4096;
   } else if (rootComponentDef.onPush) {
     lViewFlags = 64;
   }
-  const componentView = createLView(rootView, getOrCreateComponentTView(rootComponentDef), null, lViewFlags, rootView[tNode.index], tNode, environment, viewRenderer, null, null, hydrationInfo);
+  const componentView = createLView(rootView, getOrCreateComponentTView(rootComponentDef), null, lViewFlags, rootView[tNode.index], tNode, environment2, viewRenderer, null, null, hydrationInfo);
   if (tView.firstCreatePass) {
     markAsComponentHost(tView, tNode, rootDirectives.length - 1);
   }
@@ -51250,11 +51250,17 @@ var MatRadioModule = _MatRadioModule;
   }], null, null);
 })();
 
+// src/app/environment/environment.ts
+var environment = {
+  production: true,
+  apiUrl: "https://dvd-store.onrender.com"
+};
+
 // src/app/auth.service.ts
 var _AuthService = class _AuthService {
   constructor(http) {
     this.http = http;
-    this.authUrl = "http://localhost:8080/auth/";
+    this.authUrl = `${environment.apiUrl}/auth/`;
   }
   connect(username, password) {
     return this.http.post(this.authUrl + "login", {
@@ -62985,7 +62991,7 @@ var MatButtonToggleModule = _MatButtonToggleModule;
 var _MoviesService = class _MoviesService {
   constructor(http) {
     this.http = http;
-    this.moviesUrl = "http://localhost:8080/movies";
+    this.moviesUrl = `${environment.apiUrl}/movies`;
   }
   getAllMovies() {
     return this.http.get(this.moviesUrl);
@@ -66375,7 +66381,7 @@ var AddCommentDialogComponent = _AddCommentDialogComponent;
 var _CommentsService = class _CommentsService {
   constructor(http) {
     this.http = http;
-    this.commentsUrl = "http://localhost:8080/comments";
+    this.commentsUrl = `${environment.apiUrl}/comments`;
   }
   getMovieComments(movieId) {
     return this.http.get(this.commentsUrl + `/${movieId}`);

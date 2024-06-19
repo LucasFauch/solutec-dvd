@@ -1,3 +1,12 @@
+FROM node AS build
+
+WORKDIR /app
+
+COPY . .
+
+RUN npm install
+RUN npx ng build
+
 FROM nginx
 
-COPY dist/frontend/browser/* /usr/share/nginx/html/
+COPY --from=build /app/dist/frontend/browser /usr/share/nginx/html/

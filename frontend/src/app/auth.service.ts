@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from './environment/environment';
 
 interface LoginResponse {
   token: string;
@@ -11,7 +12,7 @@ interface LoginResponse {
   providedIn: 'root',
 })
 export class AuthService {
-  private authUrl = 'http://localhost:8080/auth/';
+  private authUrl = `${environment.apiUrl}/auth/`;
 
   constructor(private http: HttpClient) {}
 

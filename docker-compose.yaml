@@ -13,18 +13,6 @@ services:
       context: ./spring-backend
       dockerfile: Dockerfile
     environment:
-      MONGODB_ACCESS: mongodb
+      MONGO_URI: mongodb+srv://solutecdvd:ELqaCsoX3nSGNYwK@solutec-dvd.y59aggc.mongodb.net/?retryWrites=true&w=majority&appName=Solutec-DVD
     ports:
       - 8080:8080
-    depends_on:
-      - mongodb
-
-  mongodb:
-    image: mongo
-    volumes:
-      - mongodata:/data/db
-    ports:
-      - 27017:27017
-
-volumes:
-  mongodata:
