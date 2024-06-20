@@ -30,4 +30,8 @@ export class AppComponent {
   admin() {
     this.router.navigateByUrl('/admin');
   }
+
+  rents() {
+    this.router.navigateByUrl('/rents');
+  }
 }

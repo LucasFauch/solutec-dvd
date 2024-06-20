@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../environment/environment';
 
 export interface RentInfo {
   rentId: string;
@@ -14,7 +15,7 @@ export interface RentInfo {
 export class AdminService {
   constructor(private http: HttpClient) {}
 
-  baseUrl = 'http://localhost:8080/movies/rents';
+  baseUrl = `${environment.apiUrl}/movies/rents`;
 
   getRents() {
     return this.http.get<RentInfo[]>(this.baseUrl);

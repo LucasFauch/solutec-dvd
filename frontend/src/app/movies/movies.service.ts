@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Movie } from './movie';
 import { environment } from '../environment/environment';
+import { RentInfo } from '../admin/admin.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +30,10 @@ export class MoviesService {
 
   getRents() {
     return this.http.get<Movie[]>(this.moviesUrl + '/userrents');
+  }
+
+  getUserRents() {
+    return this.http.get<RentInfo[]>(this.moviesUrl + '/userrents');
   }
 
   rent(movieId: string, rentType: string) {
