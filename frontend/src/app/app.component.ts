@@ -34,4 +34,9 @@ export class AppComponent {
   rents() {
     this.router.navigateByUrl('/rents');
   }
+
+  home() {
+    if (this.sessionStorage.getItem('userId'))
+      this.router.navigateByUrl('/movies');
+  }
 }

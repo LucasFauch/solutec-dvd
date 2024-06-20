@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
   register() {
     this.authService.register(this.username, this.password).subscribe({
       next: () => {
-        this.response = 'Account successfully created';
+        this.connect();
       },
       error: ({ error }) => {
         this.response = error.errors.join(', ');

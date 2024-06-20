@@ -45,10 +45,6 @@
                 }
               ],
               "outputHashing": "all",
-              "outputPath": {
-                "base": "../docs",
-                "browser": ""
-              },
               "fileReplacements": [
                 {
                   "replace": "src/app/environment/environment.ts",
